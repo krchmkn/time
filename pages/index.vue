@@ -42,6 +42,7 @@ function timeTick() {
       if (!value) {
         continue
       }
+      // It updates AppClock time
       dateString.value[key] = moment(value).add(1, 'second').toISOString()
     }
   }, 1000)

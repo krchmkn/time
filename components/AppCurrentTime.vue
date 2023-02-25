@@ -41,6 +41,7 @@ watch([error, data], ([errorVal, dataVal]) => {
   }
 
   if (dataVal) {
+    // It sets AppClock time
     dateString.value[props.id] = dataVal.currentLocalTime
   }
 })
