@@ -37,10 +37,15 @@
     "main"
     "footer";
   grid-template-rows: auto 1fr auto;
-  max-width: 800px;
   min-height: 100vh;
   margin: 0 auto;
   text-align: center;
+}
+
+@media (min-width: 801px) and (max-width: 2000px) {
+  .layout {
+    max-width: 800px;
+  }
 }
 
 .header,

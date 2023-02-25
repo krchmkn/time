@@ -6,9 +6,16 @@
   --light: #f5c995;
 
   --measure: 1rem;
-  --measure-half: .5rem;
-  --measure-2x: 2rem;
-  --measure-4x: 4rem;
+  --measure-half: calc(var(--measure) / 2);
+  --measure-2x: calc(var(--measure) * 2);
+  --measure-4x: calc(var(--measure) * 4);
+}
+
+@media (min-width: 1800px) {
+  :root {
+    --font-size: 2vw;
+    --measure: 1vw;
+  }
 }
 
 *,
