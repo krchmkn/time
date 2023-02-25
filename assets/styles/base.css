@@ -73,6 +73,10 @@ p {
   margin-bottom: var(--measure-2x);
 }
 
+.t-left {
+  text-align: left;
+}
+
 @media (min-width: 481px) {
   body { background-image: url('@/assets/images/bg-desktop.webp'); }
 

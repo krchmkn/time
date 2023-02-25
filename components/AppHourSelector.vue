@@ -8,10 +8,10 @@
     </div>
     <div v-else>
       <template v-if="disabled">
-        <p>Please select a time zone</p>
+        <p class="t-left">Please select a time zone</p>
       </template>
       <template v-else>
-        <p>In {{ title.split('/').pop() }}</p>
+        <p class="t-left">In {{ title.split('/').pop() }}</p>
       </template>
 
       <AppSelector
