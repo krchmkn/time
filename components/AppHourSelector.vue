@@ -36,7 +36,7 @@ const emit = defineEmits<{
   (e: 'change', value: string): void
 }>()
 
-const hours = [...Array(25).keys()].map(
+const hours = [...Array(24).keys()].map(
   (num) => `${num} ${plural(num, 'hour', 'hours', 'hours')}`
 )
 
