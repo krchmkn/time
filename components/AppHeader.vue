@@ -9,13 +9,12 @@
   display: inline-flex;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 2rem;
-  color: var(--dark);
+  font-size: var(--measure-2x);
 }
 
 .element {
   display: inline-flex;
-  animation: blink 1s ease infinite;
+  animation: blink 2s ease infinite;
 }
 
 @keyframes blink {

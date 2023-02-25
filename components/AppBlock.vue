@@ -6,9 +6,9 @@
 
 <style module>
 .block {
-  background: var(--light);
-  color: var(--dark);
-  padding: 1rem;
-  border-radius: .5rem;
+  background: var(--white);
+  color: var(--black);
+  padding: var(--measure);
+  border-radius: var(--measure-half);
 }
 </style>

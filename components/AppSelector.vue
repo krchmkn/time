@@ -2,9 +2,12 @@
   <select
     :class="$style.select"
     v-model="value"
+    :disabled="disabled"
   >
-    <option selected disabled value="">{{ title }}</option>
-    <option v-for="option in options" :value="option">
+    <option selected disabled value="">
+      {{ title }}
+    </option>
+    <option v-for="option in options" :value="option" :key="unique()">
       {{ option }}
     </option>
   </select>
@@ -13,8 +16,9 @@
 <script setup lang="ts">
 const props = defineProps<{
   title: string
-  options: Array<string>
+  options: string[] | null
   modelValue: string
+  disabled? : boolean
 }>()
 
 const emit = defineEmits<{
@@ -33,17 +37,18 @@ const value = computed({
 
 <style module>
 .title {
-  padding-bottom: 1rem;
+  padding-bottom: var(--measure);
 }
 
 .select {
   appearance: none;
-  padding: .5rem 1rem;
-  border-radius: .5rem;
+  padding: var(--measure-half) var(--measure);
+  border-radius: var(--measure-half);
   border: none;
   background: var(--dark);
-  color: var(--light);
+  color: var(--white);
   text-align: center;
   width: 100%;
+  cursor: pointer;
 }
 </style>

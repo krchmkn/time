@@ -1,35 +1,18 @@
 <template>
   <div :class="$style.container">
-    <div
-      v-for="height in heights"
-      :style="{ height }"
-      :class="$style.box"
-    ></div>
+    <slot />
   </div>
 </template>
 
-<script setup lang="ts">
-defineProps<{
-  heights: string[]
-}>()
-</script>
-
 <style module>
-.box {
+.container {
   display: block;
-  height: 1em;
   position: relative;
-  background-color: #f5c995;
-  margin-top: .5rem;
+  background-color: var(--light);
+  border-radius: var(--measure-half);
   overflow: hidden;
-  border-radius: .5em;
 }
-
-.box:first-child {
-  margin-top: 0;
-}
-
-.box::after {
+.container::after {
   position: absolute;
   top: 0;
   right: 0;

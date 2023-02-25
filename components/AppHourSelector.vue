@@ -1,27 +1,35 @@
 <template>
   <AppTransition>
-    <AppSkeletonLoader
-      v-if="pending"
-      :heights="['1.4em', '2.3em']"
-    />
+    <div v-if="pending">
+      <p>
+        <AppSkeletonLoader style="height: 1.4em;" />
+      </p>
+      <AppSkeletonLoader style="height: 2.3em;" />
+    </div>
     <div v-else>
-      <p>In {{ title.split('/').pop() }}</p>
+      <template v-if="disabled">
+        <p>Please select a time zone</p>
+      </template>
+      <template v-else>
+        <p>In {{ title.split('/').pop() }}</p>
+      </template>
+
       <AppSelector
         title="Select hour"
         v-model="hour"
         :options="hours"
+        :disabled="disabled"
       />
     </div>
   </AppTransition>
 </template>
 
 <script setup lang="ts">
-import plural from 'text-plural'
-
 const props = defineProps<{
   value: string,
   title: string
   pending: boolean
+  disabled: boolean
 }>()
 
 const emit = defineEmits<{

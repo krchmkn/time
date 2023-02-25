@@ -1,17 +1,20 @@
 <template>
-  error{{ error }}
   <section class="container">
     <h1>{{ error.statusCode }}</h1>
     <h2>{{ error.statusMessage }}</h2>
 
-    <button @click="handleError">Go to main page</button>
+    <button @click="handleError">Reload page</button>
   </section>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  error: { [key: string]: string }
+const props = defineProps<{
+  error: ObjectItem
 }>()
+
+useHead({
+  title: `${props.error.statusCode} ${props.error.statusMessage}`
+})
 
 const handleError = () => clearError({ redirect: '/' })
 </script>
@@ -22,6 +25,7 @@ const handleError = () => clearError({ redirect: '/' })
   place-content: center;
   place-items: center;
   height: 100vh;
-  padding: 1rem;
+  padding: var(--measure);
+  text-align: center;
 }
 </style>
