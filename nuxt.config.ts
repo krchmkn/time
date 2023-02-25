@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
   css: ["@/assets/styles/base.css"],
   telemetry: false,
-  ssr: false,
   app: {
     head: {
       title: 'Time. App about time zones',

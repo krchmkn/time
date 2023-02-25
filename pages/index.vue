@@ -22,12 +22,11 @@ if (
   router.replace({ query: { ...toRaw(selectedTimeZone.value) }})
 }
 
-const { pending, data: timeZonesList, error } = useTimeZonesList()
-watch([error, timeZonesList], ([errorVal, timeZonesListVal]) => {
-  if (errorVal || !timeZonesListVal) {
-    showError({ statusMessage: 'Failed to load list of timezones.' })
-  }
-})
+const { pending, data: timeZonesList, error } = await useTimeZonesList()
+
+if (error.value || !timeZonesList.value) {
+  showError({ statusMessage: 'Failed to load list of timezones.' })
+}
 
 let interval: NodeJS.Timer
 onMounted(timeTick)

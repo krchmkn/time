@@ -31,20 +31,18 @@ const props = defineProps<{
 const selectedTimeZone = useSelectedTimeZone()
 const dateString = useDateString()
 
-const { pending: pendingTimeZoneInfo, data, error, refresh } = useTimeZoneInfo(
+const { pending: pendingTimeZoneInfo, data, error, refresh } = await useTimeZoneInfo(
   selectedTimeZone.value[props.id]
 )
 
-watch([error, data], ([errorVal, dataVal]) => {
-  if (errorVal) {
-    showError({ statusMessage: 'Failed to load timezone information.' })
-  }
+if (error.value) {
+  showError({ statusMessage: 'Failed to load timezone information.' })
+}
 
-  if (dataVal) {
-    // It sets AppClock time
-    dateString.value[props.id] = dataVal.currentLocalTime
-  }
-})
+if (data.value) {
+  // It sets AppClock time
+  dateString.value[props.id] = data.value.currentLocalTime
+}
 
 const router = useRouter()
 watch(() => selectedTimeZone.value[props.id], () => {

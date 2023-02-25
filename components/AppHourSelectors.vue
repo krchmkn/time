@@ -6,7 +6,6 @@
           :value="selectedHour[key]"
           :title="selectedTimeZone[key]"
           :pending="pending[key]"
-          :disabled="disabled"
           @change="(value) => onHourChange(value, key)"
         />
       </AppBlock>
@@ -25,15 +24,9 @@
 
 <script setup lang="ts">
 const selectedTimeZone = useSelectedTimeZone()
-const dateString = useDateString()
 const selectedHour = reactive<ObjectItem>({ first: '', second: '' })
 const pending = reactive<{ [key: string]: boolean }>({ first: false, second: false })
 const router = useRouter()
-
-const disabled = computed(() => (
-  Object.values(selectedTimeZone.value).some(el => !el)
-   || Object.values(dateString.value).some(el => !el)
-))
 
 async function onHourChange(value: string, fromKey: string | number) {
   selectedHour[fromKey] = value

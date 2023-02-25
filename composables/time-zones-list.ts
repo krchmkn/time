@@ -1,4 +1,4 @@
-export const useTimeZonesList = () => useLazyFetch<string[]>(
+export const useTimeZonesList = () => useFetch<string[]>(
   '/api/time-zones',
   { default: () => [] }
 )

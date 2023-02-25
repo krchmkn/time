@@ -29,7 +29,7 @@ const props = defineProps<{
   value: string,
   title: string
   pending: boolean
-  disabled: boolean
+  disabled?: boolean
 }>()
 
 const emit = defineEmits<{
