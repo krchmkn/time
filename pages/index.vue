@@ -1,48 +1,124 @@
 <template>
-  <section class="section">
-    <AppBlock v-for="key in ['first', 'second']" :key="unique()">
-      <AppCurrentTime
-        :id="key"
-        :pending="pending"
-        :timeZones="timeZonesList"
-      />
-    </AppBlock>
-  </section>
+  <div>
+    <AppSection>
+      <AppBlock>
+        <AppTimeZoneSelector
+          v-model="majorTimeZone"
+          :list="timeZonesList"
+          :pending="pendingMajorTimeZone"
+          :disabled="pendingOnHourChange"
+        />
+        <AppClock
+          :pending="pendingMajorTimeZone"
+          :date-string="majorCurrentLocalTime"
+        />
+      </AppBlock>
 
-  <AppHourSelectors />
+      <AppBlock>
+        <AppTimeZoneSelector
+          v-model="minorTimeZone"
+          :list="timeZonesList"
+          :pending="pendingMinorTimeZone"
+          :disabled="pendingOnHourChange"
+        />
+        <AppClock
+          :pending="pendingMinorTimeZone"
+          :date-string="minorCurrentLocalTime"
+        />
+      </AppBlock>
+    </AppSection>
+
+    <AppSection>
+      <AppBlock>
+        <AppHourSelector
+          :value="selectedHour['major']"
+          :title="majorTimeZone"
+          :pending="pendingOnHourChange"
+          :disabled="pendingOnHourChange"
+          @change="(value) => onHourChange(value, 'major')"
+        />
+      </AppBlock>
+
+      <AppBlock>
+        <AppHourSelector
+          :value="selectedHour['minor']"
+          :title="minorTimeZone"
+          :pending="pendingOnHourChange"
+          :disabled="pendingOnHourChange"
+          @change="(value) => onHourChange(value, 'minor')"
+        />
+      </AppBlock>
+    </AppSection>
+  </div>
 </template>
 
 <script setup lang="ts">
-const selectedTimeZone = useSelectedTimeZone()
-
-const router = useRouter()
-if (
-  !Object.values(selectedTimeZone.value).every(el => !el)
-) {
-  router.replace({ query: { ...toRaw(selectedTimeZone.value) }})
+const config = useRuntimeConfig()
+const {
+  data: timeZonesList,
+  error
+} = await useFetch<string[]>('/api/time-zones')
+if (error.value) {
+  showError(error.value)
 }
 
-const { pending, data: timeZonesList, error } = await useTimeZonesList()
+const majorTimeZone = ref(config.defaultTimeZones[0])
+const {
+  pending: pendingMajorTimeZone,
+  data: majorTimeZoneInfo
+} = await useTimeZoneInfo(majorTimeZone, [majorTimeZone])
 
-if (error.value || !timeZonesList.value) {
-  showError({ statusMessage: 'Failed to load list of timezones.' })
+const majorCurrentLocalTime = ref('')
+if (majorTimeZoneInfo.value) {
+  majorCurrentLocalTime.value = majorTimeZoneInfo.value?.currentLocalTime
+}
+
+const minorTimeZone = ref(config.defaultTimeZones[1])
+const {
+  pending: pendingMinorTimeZone,
+  data: minorTimeZoneInfo
+} = await useTimeZoneInfo(minorTimeZone, [minorTimeZone])
+
+const minorCurrentLocalTime = ref('')
+if (minorTimeZoneInfo.value) {
+  minorCurrentLocalTime.value = minorTimeZoneInfo.value?.currentLocalTime
+}
+
+const selectedHour = reactive<ObjectItem>({ major: '', minor: ''})
+const pendingOnHourChange = ref(false)
+
+async function onHourChange(value: string, fromKey: string) {
+  pendingOnHourChange.value = true
+  selectedHour[fromKey] = value
+
+  const isMajor = (fromKey === 'major')
+  try {
+    selectedHour[
+      (isMajor ? 'minor' : 'major')
+    ] = await handleHourChange(
+      value,
+      (isMajor ? majorTimeZone.value : minorTimeZone.value),
+      (isMajor ? minorTimeZone.value : majorTimeZone.value),
+    )
+  } finally {
+    pendingOnHourChange.value  = false
+  }
 }
 
 let interval: NodeJS.Timer
 onMounted(timeTick)
 onBeforeUnmount(() => clearInterval(interval))
 
-const dateString = useDateString()
 function timeTick() {
-  clearInterval(interval)
   interval = setInterval(() => {
-    for (const key in dateString.value) {
-      const value = dateString.value[key]
-      if (!value) {
-        continue
-      }
-      // It updates AppClock time
-      dateString.value[key] = moment(value).add(1, 'second').toISOString()
+    if (majorCurrentLocalTime) {
+      majorCurrentLocalTime.value = moment(majorCurrentLocalTime.value)
+        .add(1, 'second').toISOString()
+    }
+
+    if (minorCurrentLocalTime) {
+      minorCurrentLocalTime.value = moment(minorCurrentLocalTime.value)
+        .add(1, 'second').toISOString()
     }
   }, 1000)
 }

@@ -3,7 +3,7 @@
     <h1>{{ error.statusCode }}</h1>
     <h2>{{ error.statusMessage }}</h2>
 
-    <button @click="handleError">Reload page</button>
+    <button @click="handleError">Try again</button>
   </section>
 </template>
 

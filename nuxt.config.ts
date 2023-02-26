@@ -10,5 +10,10 @@ export default defineNuxtConfig({
         { name: 'description', content: 'App about time zones' }
       ],
     }
+  },
+  runtimeConfig: {
+    public: {
+      defaultTimeZones: ['America/Costa_Rica', 'Europe/Moscow']
+    }
   }
 })

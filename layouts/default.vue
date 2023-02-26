@@ -5,7 +5,7 @@
     </header>
 
     <main :class="$style.main">
-      <NuxtPage />
+      <slot />
     </main>
 
     <footer :class="$style.footer">
