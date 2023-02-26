@@ -1,6 +1,6 @@
 {
   "name": "time",
-  "version": "1.0.2-2",
+  "version": "1.0.2",
   "author": "Dmitrii Korchemkin",
   "scripts": {
     "build": "nuxt build",
