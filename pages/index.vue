@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig()
+
 const {
   data: timeZonesList,
   error
@@ -62,7 +63,11 @@ if (error.value) {
   showError(error.value)
 }
 
-const majorTimeZone = ref(config.defaultTimeZones[0])
+const route = useRoute()
+
+const majorTimeZone = ref(
+  (route.query['zone[]']?.[0] || config.defaultTimeZones[0])
+)
 const {
   pending: pendingMajorTimeZone,
   data: majorTimeZoneInfo
@@ -73,7 +78,9 @@ if (majorTimeZoneInfo.value) {
   majorCurrentLocalTime.value = majorTimeZoneInfo.value?.currentLocalTime
 }
 
-const minorTimeZone = ref(config.defaultTimeZones[1])
+const minorTimeZone = ref(
+  (route.query['zone[]']?.[1] || config.defaultTimeZones[1])
+)
 const {
   pending: pendingMinorTimeZone,
   data: minorTimeZoneInfo
@@ -83,6 +90,11 @@ const minorCurrentLocalTime = ref('')
 if (minorTimeZoneInfo.value) {
   minorCurrentLocalTime.value = minorTimeZoneInfo.value?.currentLocalTime
 }
+
+const router = useRouter()
+watch([majorTimeZone, minorTimeZone], ([majorVal, minorVal]) => {
+  router.push({ query: { 'zone[]': [majorVal, minorVal]} })
+})
 
 const selectedHour = reactive<ObjectItem>({ major: '', minor: ''})
 const pendingOnHourChange = ref(false)
