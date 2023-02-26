@@ -4,10 +4,14 @@ export default defineNuxtConfig({
   telemetry: false,
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
       title: 'Time. App about time zones',
       meta: [
         { name: 'author', content: 'Dmitrii Korchemkin' },
-        { name: 'description', content: 'App about time zones' }
+        { name: 'description', content: 'App about time zones' },
+        { name: 'theme-color', content: '#f5c995' }
       ],
     }
   },
