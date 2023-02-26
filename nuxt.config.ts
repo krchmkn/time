@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
   css: ["@/assets/styles/base.css"],
   telemetry: false,
-  ssr: false,
   app: {
     head: {
       title: 'Time. App about time zones',
@@ -10,6 +9,11 @@ export default defineNuxtConfig({
         { name: 'author', content: 'Dmitrii Korchemkin' },
         { name: 'description', content: 'App about time zones' }
       ],
+    }
+  },
+  runtimeConfig: {
+    public: {
+      defaultTimeZones: ['America/Costa_Rica', 'Europe/Moscow']
     }
   }
 })

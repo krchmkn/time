@@ -1,4 +1,12 @@
-export const useTimeZoneInfo = (timeZone: string) => useLazyFetch<ObjectItem>(
-  '/api/time-zone-info',
-  { query: { timeZone }, pick: ['currentLocalTime'] }
-)
+export async function useTimeZoneInfo(
+  timeZone: string, watch: any[]
+) {
+  return useFetch<ObjectItem>(
+    '/api/time-zone-info',
+    {
+      query: { timeZone },
+      pick: ['currentLocalTime'],
+      watch
+    }
+  )
+}

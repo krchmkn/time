@@ -7,13 +7,7 @@
       <AppSkeletonLoader style="height: 2.3em;" />
     </div>
     <div v-else>
-      <template v-if="disabled">
-        <p class="t-left">Please select a time zone</p>
-      </template>
-      <template v-else>
-        <p class="t-left">In {{ title.split('/').pop() }}</p>
-      </template>
-
+      <p class="t-left">In {{ title.split('/').pop() }}</p>
       <AppSelector
         title="Select hour"
         v-model="hour"
@@ -28,8 +22,8 @@
 const props = defineProps<{
   value: string,
   title: string
-  pending: boolean
-  disabled: boolean
+  pending?: boolean
+  disabled?: boolean
 }>()
 
 const emit = defineEmits<{

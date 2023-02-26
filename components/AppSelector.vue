@@ -47,7 +47,6 @@ const value = computed({
   border: none;
   background: var(--dark);
   color: var(--white);
-  text-align: center;
   width: 100%;
   cursor: pointer;
 }
