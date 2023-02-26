@@ -34,7 +34,7 @@
           :value="selectedHour['major']"
           :title="majorTimeZone"
           :pending="pendingOnHourChange"
-          :disabled="pendingOnHourChange"
+          :disabled="isHourSelectorDisabled"
           @change="(value) => onHourChange(value, 'major')"
         />
       </AppBlock>
@@ -44,7 +44,7 @@
           :value="selectedHour['minor']"
           :title="minorTimeZone"
           :pending="pendingOnHourChange"
-          :disabled="pendingOnHourChange"
+          :disabled="isHourSelectorDisabled"
           @change="(value) => onHourChange(value, 'minor')"
         />
       </AppBlock>
@@ -134,4 +134,15 @@ function timeTick() {
     }
   }, 1000)
 }
+
+const isHourSelectorDisabled = computed(() => (
+  pendingMajorTimeZone.value
+    || pendingMinorTimeZone.value
+    || pendingOnHourChange.value
+))
+
+watch([majorTimeZone, minorTimeZone], () => {
+  selectedHour.major = ''
+  selectedHour.minor = ''
+})
 </script>
