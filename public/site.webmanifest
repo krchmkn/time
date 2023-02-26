@@ -1,0 +1,9 @@
+{
+  "name": "Simple Nuxt 3 app about time zones",
+  "short_name": "time.kda.name",
+  "icons": [],
+  "theme_color": "#f5c995",
+  "background_color": "#f5c995",
+  "start_url": "/",
+  "display": "standalone"
+}
