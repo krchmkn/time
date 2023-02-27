@@ -9,3 +9,11 @@
     </NuxtLayout>
   </div>
 </template>
+
+<script setup lang="ts">
+onMounted(() => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+})
+</script>
