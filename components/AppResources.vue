@@ -33,13 +33,13 @@
           </p>
 
           <div>
-            <p v-for="({ text, link }) in list" :key="unique()">
+            <div v-for="({ text, link }) in list" :key="unique()">
               {{ text }}
               <NuxtLink
                 :to="link.href"
                 target="_blank"
                 rel="noopener" external>{{ link.text }}</NuxtLink>.
-            </p>
+            </div>
           </div>
         </AppBlock>
       </AppTransition>
@@ -105,7 +105,8 @@ onBeforeUnmount(() => {
   right: 0;
   bottom: 0;
   text-align: left;
-  border-color: var(--light);
+  box-shadow: -4px -4px 20px var(--dark);
+  border: 0;
 }
 
 .header {

@@ -36,7 +36,7 @@
 .header,
 .main,
 .footer {
-  padding: var(--measure);
+  padding: var(--measure-half);
 }
 
 .header {
@@ -50,5 +50,6 @@
 
 .footer {
   grid-area: footer;
+  padding-bottom: var(--measure);
 }
 </style>
