@@ -2,7 +2,7 @@
   <AppTransition>
     <AppSkeletonLoader v-if="pending" style="height: 2.4em;" />
     <template v-else>
-      <div :class="$style.container">
+      <div :class="[$style.container, 'unselectable']">
         {{ !dateString ? '--:--:--' : moment(dateString).format('HH:mm:ss') }}
       </div>
     </template>

@@ -5,7 +5,7 @@
       <p><AppSkeletonLoader style="height: 2.3em;" /></p>
     </div>
     <div v-else>
-      <p class="t-left">Current time in</p>
+      <p class="t-left unselectable">Current time in</p>
       <p>
         <AppSelector
           title="Select time zone"

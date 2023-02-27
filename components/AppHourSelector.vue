@@ -7,7 +7,7 @@
       <AppSkeletonLoader style="height: 2.3em;" />
     </div>
     <div v-else>
-      <p class="t-left">In {{ title.split('/').pop() }}</p>
+      <p class="t-left unselectable">In {{ title.split('/').pop() }}</p>
       <AppSelector
         title="Select hour"
         v-model="hour"

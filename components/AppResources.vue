@@ -105,6 +105,7 @@ onBeforeUnmount(() => {
   right: 0;
   bottom: 0;
   text-align: left;
+  border-color: var(--light);
 }
 
 .header {

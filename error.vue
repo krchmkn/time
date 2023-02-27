@@ -1,7 +1,7 @@
 <template>
   <section class="container">
-    <h1>{{ error.statusCode }}</h1>
-    <h2>{{ error.statusMessage }}</h2>
+    <h1>An error occurred</h1>
+    <h2>{{ error.statusCode }} {{ error.statusMessage }}</h2>
 
     <button @click="handleError">Try again</button>
   </section>

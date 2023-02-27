@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/" :class="$style.logo">
+  <NuxtLink to="/" :class="[$style.logo, 'unselectable']">
     Ti<span :class="$style.element">:</span>me
   </NuxtLink>
 </template>
