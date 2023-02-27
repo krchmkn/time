@@ -10,5 +10,6 @@
   color: var(--black);
   padding: var(--measure);
   border-radius: var(--measure-half);
+  border: 4px solid var(--dark);
 }
 </style>

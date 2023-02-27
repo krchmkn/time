@@ -9,22 +9,7 @@
     </main>
 
     <footer :class="$style.footer">
-      Developed with
-      <NuxtLink
-        to="https://nuxt.com/"
-        target="_blank"
-        rel="noopener" external>Nuxt</NuxtLink>
-      and
-      <NuxtLink
-        to="https://www.timeapi.io/"
-        target="_blank" rel="noopener"
-        external>timeapi.io</NuxtLink>.
-      Source code is stored on
-      <NuxtLink
-        to="https://github.com/krchmkn/time"
-        target="_blank"
-        rel="noopener"
-        external>Github</NuxtLink>.
+      <AppResources />
     </footer>
   </div>
 </template>

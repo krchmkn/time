@@ -1,0 +1,19 @@
+{
+  "name": "Time. App about time zones",
+  "short_name": "Time",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#583b87",
+  "theme_color": "#583b87",
+  "description": "App about time zones",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

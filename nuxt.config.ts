@@ -11,8 +11,12 @@ export default defineNuxtConfig({
       meta: [
         { name: 'author', content: 'Dmitrii Korchemkin' },
         { name: 'description', content: 'App about time zones' },
-        { name: 'theme-color', content: '#f5c995' }
+        { name: 'theme-color', content: '#583b87' }
       ],
+      link: [
+        { rel: 'manifest', href: 'manifest.json' },
+        { rel:'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }
+      ]
     }
   },
   runtimeConfig: {
