@@ -54,7 +54,9 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig()
+const route = useRoute()
 
+// Requests a list of time zones
 const {
   data: timeZonesList,
   error
@@ -63,37 +65,52 @@ if (error.value) {
   showError(error.value)
 }
 
-const route = useRoute()
-
+// Requests information about the major time zone
 const majorTimeZone = ref(
   (route.query['zone[]']?.[0] || config.defaultTimeZones[0])
 )
 const {
   pending: pendingMajorTimeZone,
-  data: majorTimeZoneInfo
+  data: majorTimeZoneInfo,
+  error: majorError,
 } = await useTimeZoneInfo(majorTimeZone, [majorTimeZone])
 
+// Sets major current local time
 const majorCurrentLocalTime = ref('')
 if (majorTimeZoneInfo.value) {
   majorCurrentLocalTime.value = majorTimeZoneInfo.value?.currentLocalTime
 }
 
+// Watches major current local time change
+watch(majorTimeZoneInfo, (newVal) => {
+  if (!newVal) {
+    return
+  }
+  majorCurrentLocalTime.value = newVal.currentLocalTime
+})
+
+// Requests information about the minor time zone
 const minorTimeZone = ref(
   (route.query['zone[]']?.[1] || config.defaultTimeZones[1])
 )
 const {
   pending: pendingMinorTimeZone,
-  data: minorTimeZoneInfo
+  data: minorTimeZoneInfo,
+  error: minorError,
 } = await useTimeZoneInfo(minorTimeZone, [minorTimeZone])
 
+// Sets minor current local time
 const minorCurrentLocalTime = ref('')
 if (minorTimeZoneInfo.value) {
   minorCurrentLocalTime.value = minorTimeZoneInfo.value?.currentLocalTime
 }
 
-const router = useRouter()
-watch([majorTimeZone, minorTimeZone], ([majorVal, minorVal]) => {
-  router.push({ query: { 'zone[]': [majorVal, minorVal]} })
+// Watches minor current local time change
+watch(minorTimeZoneInfo, (newVal) => {
+  if (!newVal) {
+    return
+  }
+  minorCurrentLocalTime.value = newVal.currentLocalTime
 })
 
 const selectedHour = reactive<ObjectItem>({ major: '', minor: ''})
@@ -117,6 +134,7 @@ async function onHourChange(value: string, fromKey: string) {
   }
 }
 
+// Starts interval for current major and minor times changes
 let interval: NodeJS.Timer
 onMounted(timeTick)
 onBeforeUnmount(() => clearInterval(interval))
@@ -141,8 +159,32 @@ const isHourSelectorDisabled = computed(() => (
     || pendingOnHourChange.value
 ))
 
-watch([majorTimeZone, minorTimeZone], () => {
+
+const router = useRouter()
+// Keeps track of time zone changes
+watch([
+  majorTimeZone, minorTimeZone,
+  majorError, minorError
+], ([
+  majorVal, minorVal,
+  majorErrorVal, minorErrorVal
+]) => {
+  router.push({ query: { 'zone[]': [majorVal, minorVal]} })
+  // Clear the selected hour every time when changing time zones
   selectedHour.major = ''
   selectedHour.minor = ''
+
+  // If the timezone request returns an error,
+  // sets the clock to its initial value
+
+  if (majorErrorVal) {
+    majorCurrentLocalTime.value = ''
+    return
+  }
+
+  if (minorErrorVal) {
+    minorCurrentLocalTime.value = ''
+    return
+  }
 })
 </script>
