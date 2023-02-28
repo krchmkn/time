@@ -35,6 +35,6 @@ export async function handleHourChange(
     return ''
   }
 
-  const hour = moment(data.value.conversionResult.dateTime).hour();
+  const hour = data.value.conversionResult.hour;
   return `${hour} ${plural(hour, 'hour', 'hours', 'hours')}`;
 }
