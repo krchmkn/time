@@ -7,7 +7,7 @@
           :list="timeZonesList"
           :pending="pendingMajorTimeZone"
           :disabled="pendingOnHourChange"
-          autofocus
+          id="major-timezone"
         />
         <AppClock
           :pending="pendingMajorTimeZone"
@@ -21,6 +21,7 @@
           :list="timeZonesList"
           :pending="pendingMinorTimeZone"
           :disabled="pendingOnHourChange"
+          id="minor-timezone"
         />
         <AppClock
           :pending="pendingMinorTimeZone"
@@ -32,6 +33,7 @@
     <AppSection>
       <AppBlock>
         <AppHourSelector
+          id="major-hour"
           :value="selectedHour['major']"
           :title="majorTimeZone"
           :pending="pendingOnHourChange"
@@ -42,6 +44,7 @@
 
       <AppBlock>
         <AppHourSelector
+          id="minor-hour"
           :value="selectedHour['minor']"
           :title="minorTimeZone"
           :pending="pendingOnHourChange"

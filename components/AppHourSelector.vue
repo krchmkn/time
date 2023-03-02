@@ -7,10 +7,13 @@
       <AppSkeletonLoader style="height: 2.3em;" />
     </div>
     <div v-else>
-      <p class="t-left unselectable">In {{ title.split('/').pop() }}</p>
+      <p class="t-left unselectable">
+        <label :for="id">In {{ title.split('/').pop() }}</label>
+      </p>
       <AppSelector
+        :id="id"
         title="Select hour"
-        name="Select hour"
+        name="hours"
         v-model="hour"
         :options="hours"
         :disabled="disabled"
@@ -25,6 +28,7 @@ const props = defineProps<{
   title: string
   pending?: boolean
   disabled?: boolean
+  id: string
 }>()
 
 const emit = defineEmits<{

@@ -5,11 +5,14 @@
       <p><AppSkeletonLoader style="height: 2.3em;" /></p>
     </div>
     <div v-else>
-      <p class="t-left unselectable">Current time in</p>
+      <p class="t-left unselectable">
+        <label :for="id">Current time in</label>
+      </p>
       <p>
         <AppSelector
+          :id="id"
           title="Select time zone"
-          name="Select time zone"
+          name="timezones"
           v-model="value"
           :options="list"
           :disabled="disabled"
@@ -26,6 +29,7 @@ const props = defineProps<{
   pending?: boolean
   disabled?: boolean
   list: string[] | null
+  id: string
 }>()
 
 const emit = defineEmits<{
