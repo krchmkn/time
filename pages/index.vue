@@ -7,6 +7,7 @@
           :list="timeZonesList"
           :pending="pendingMajorTimeZone"
           :disabled="pendingOnHourChange"
+          autofocus
         />
         <AppClock
           :pending="pendingMajorTimeZone"

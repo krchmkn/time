@@ -10,6 +10,7 @@
       <p class="t-left unselectable">In {{ title.split('/').pop() }}</p>
       <AppSelector
         title="Select hour"
+        name="Select hour"
         v-model="hour"
         :options="hours"
         :disabled="disabled"

@@ -33,6 +33,11 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline-color: var(--light);
+  color: var(--light) !important;
+}
+
 body {
   background: var(--dark);
   background: linear-gradient(to right bottom, var(--light), var(--dark));

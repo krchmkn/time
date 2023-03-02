@@ -6,44 +6,52 @@
       height="24"
       alt="Open information icon"
       loading="lazy"
+      tabindex="0"
+      role="button"
+      aria-label="Open information"
       :class="$style.action"
-      @click="open = true"
+      @click="toggle(true)"
+      @keyup.enter="toggle(true)"
     />
 
-    <div ref="content">
-      <AppTransition
-        name="fade"
-        @after-enter="onAfterEnter"
-        @after-leave="onAfterLeave"
+    <AppTransition
+      name="fade"
+      @after-enter="onAfterEnter"
+      @after-leave="onAfterLeave"
+    >
+      <AppBlock
+        v-if="open"
+        ref="content"
+        :class="$style.content"
       >
-        <AppBlock
-          v-if="open"
-          :class="$style.content"
-        >
-          <p :class="$style.header">
-            <img
-              src="@/assets/images/close-icon.webp"
-              width="24"
-              height="24"
-              alt="Close information icon"
-              loading="lazy"
-              :class="$style.action"
-              @click="open = false"
-            />
-          </p>
+        <p :class="$style.header">
+          <img
+            ref="closeBtn"
+            src="@/assets/images/close-icon.webp"
+            width="24"
+            height="24"
+            alt="Close information icon"
+            loading="lazy"
+            tabindex="0"
+            role="button"
+            aria-label="Close information"
+            :class="$style.action"
+            @click="toggle(false)"
+            @keyup.enter="toggle(false)"
+          />
+        </p>
 
-          <div>
-            <div v-for="({ text, link }) in list" :key="unique()">
-              {{ text }}
-              <NuxtLink
-                :to="link.href"
-                target="_blank"
-                rel="noopener" external>{{ link.text }}</NuxtLink>.
-            </div>
+        <div>
+          <div v-for="({ text, link }) in list" :key="unique()">
+            {{ text }}
+            <NuxtLink
+              :to="link.href"
+              target="_blank"
+              rel="noopener" external>{{ link.text }}</NuxtLink>.
           </div>
-        </AppBlock>
-      </AppTransition>
-    </div>
+        </div>
+      </AppBlock>
+    </AppTransition>
   </div>
 </template>
 
@@ -79,10 +87,20 @@ function onAfterLeave() {
 }
 
 const content = ref(null)
-function handleClickOutside (event: MouseEvent) {
+function handleClickOutside(event: MouseEvent) {
   if (content.value && opened.value && !event.composedPath().includes(content.value)) {
     open.value = false
   }
+}
+
+const closeBtn = ref<HTMLElement>()
+function toggle(value: boolean) {
+  open.value = value
+  nextTick(() => {
+    if (closeBtn.value) {
+      closeBtn.value.focus()
+    }
+  })
 }
 
 onMounted(() => {

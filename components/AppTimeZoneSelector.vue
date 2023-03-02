@@ -9,9 +9,11 @@
       <p>
         <AppSelector
           title="Select time zone"
+          name="Select time zone"
           v-model="value"
           :options="list"
           :disabled="disabled"
+          :autofocus="$attrs.autofocus"
         />
       </p>
     </div>
