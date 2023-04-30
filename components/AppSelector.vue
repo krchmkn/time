@@ -1,5 +1,22 @@
 <template>
+  <template v-if="type === 'input'">
+    <input
+      :list="id"
+      :value="modelValue"
+      :disabled="disabled"
+      :placeholder="title"
+      :class="$style.input"
+      v-bind="$attrs"
+      @change="onChange"
+    />
+
+    <datalist :id="id">
+      <option v-for="option in options" :value="option" :key="unique()" />
+    </datalist>
+  </template>
+
   <select
+    v-else
     :class="$style.select"
     v-model="value"
     :disabled="disabled"
@@ -15,10 +32,12 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+  id: string
   title: string
   options: string[] | null
   modelValue: string
   disabled? : boolean
+  type?: string,
 }>()
 
 const emit = defineEmits<{
@@ -33,13 +52,17 @@ const value = computed({
     emit('update:modelValue', value)
   }
 })
+
+function onChange({ target }: Event) {
+  emit('update:modelValue', (target as HTMLInputElement).value)
+}
 </script>
 
 <style module>
 .title {
   padding-bottom: var(--measure);
 }
-
+.input,
 .select {
   appearance: none;
   padding: var(--measure-half) var(--measure);

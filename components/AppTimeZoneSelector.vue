@@ -10,6 +10,7 @@
       </p>
       <p>
         <AppSelector
+          type="input"
           :id="id"
           title="Select time zone"
           name="timezones"
